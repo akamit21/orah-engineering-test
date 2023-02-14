@@ -7,13 +7,13 @@ import { RolllStateType } from "shared/models/roll"
 
 interface Props {
   stateList: StateList[]
-  onItemClick?: (type: ItemType) => void
+  filterByRollState?: (type: ItemType) => void
   size?: number
 }
-export const RollStateList: React.FC<Props> = ({ stateList, size = 14, onItemClick }) => {
+export const RollStateList: React.FC<Props> = ({ stateList, size = 14, filterByRollState }) => {
   const onClick = (type: ItemType) => {
-    if (onItemClick) {
-      onItemClick(type)
+    if (filterByRollState) {
+      filterByRollState(type)
     }
   }
 
@@ -62,4 +62,4 @@ interface StateList {
   count: number
 }
 
-type ItemType = RolllStateType | "all"
+export type ItemType = RolllStateType | "all"
