@@ -1,9 +1,10 @@
 import { useReducer, useCallback } from "react"
 import { ApiResponse, ResponseError } from "shared/interfaces/http.interface"
 import { RollInput } from "shared/models/roll"
-import { getHomeboardStudents } from "api/get-homeboard-students"
+import { getHomeboardStudents, updateStudentAttendance } from "api/get-homeboard-students"
 import { getActivities } from "api/get-activities"
 import { saveActiveRoll } from "api/save-active-roll"
+import { StudentRollInput } from "shared/models/person"
 
 interface Options {
   url: Endpoint
@@ -30,6 +31,8 @@ export function useApi<ReturnType = {}>({ url, initialLoadState = "loading" }: O
           return getActivities().then(process)
         case "save-roll":
           return saveActiveRoll(params as RollInput).then(process)
+        case "update-student-attendance":
+          return updateStudentAttendance(params as StudentRollInput).then(process)
       }
     },
     [url]
@@ -59,5 +62,5 @@ interface ReducerState<T> {
 type ReducerAction<T> = { type: "success"; result: T } | { type: "error"; error: ResponseError } | { type: "loading" }
 
 /* use-api options interfaces */
-export type Endpoint = "get-homeboard-students" | "save-roll" | "get-activities"
+export type Endpoint = "get-homeboard-students" | "save-roll" | "get-activities" | "update-student-attendance"
 export type LoadState = "unloaded" | "loading" | "loaded" | "error"
